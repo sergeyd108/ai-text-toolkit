@@ -1,0 +1,29 @@
+{
+  "mcpServers": {
+    "project:serena": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/oraios/serena",
+        "serena",
+        "start-mcp-server",
+        "--context",
+        "claude-code",
+        "--project",
+        "."
+      ],
+      "env": {}
+    },
+    "project:deepwiki": {
+      "type": "http",
+      "url": "https://mcp.deepwiki.com/mcp",
+      "env": {}
+    },
+    "project:docfork": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "docfork@latest"]
+    }
+  }
+}

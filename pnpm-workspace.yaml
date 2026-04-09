@@ -1,0 +1,9 @@
+ignoredBuiltDependencies:
+  - '@parcel/watcher'
+  - '@tailwindcss/oxide'
+  - esbuild
+  - unrs-resolver
+  - vue-demi
+
+patchedDependencies:
+  '@nuxt/ui': patches/@nuxt__ui.patch

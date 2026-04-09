@@ -1,0 +1,46 @@
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
+@plugin '@tailwindcss/typography';
+
+@theme static {
+  --breakpoint-3xl: 120rem;
+
+  --font-sans: 'Public Sans', sans-serif;
+
+  --color-brand-blue-50: #f2f8ff;
+  --color-brand-blue-100: #d7eaff;
+  --color-brand-blue-200: #a2cdff;
+  --color-brand-blue-300: #6cb0ff;
+  --color-brand-blue-400: #3794ff;
+  --color-brand-blue-500: #0077ff;
+  --color-brand-blue-600: #0165d8;
+  --color-brand-blue-700: #0153b1;
+  --color-brand-blue-800: #02428a;
+  --color-brand-blue-900: #023063;
+  --color-brand-blue-950: #022750;
+
+  --color-brand-green-50: #f2fdfb;
+  --color-brand-green-100: #d7f9f2;
+  --color-brand-green-200: #a2f0e1;
+  --color-brand-green-300: #6ce7d0;
+  --color-brand-green-400: #37debf;
+  --color-brand-green-500: #01d5ae;
+  --color-brand-green-600: #01b494;
+  --color-brand-green-700: #019479;
+  --color-brand-green-800: #02735f;
+  --color-brand-green-900: #025244;
+  --color-brand-green-950: #024237;
+
+  --color-gray-50: #f4f6f9;
+  --color-gray-100: #eeeff1;
+  --color-gray-200: #e9eaeb;
+  --color-gray-300: #d5d7da;
+  --color-gray-400: #bdbdbd;
+  --color-gray-500: #909090;
+  --color-gray-600: #646464;
+  --color-gray-700: #4d4d4d;
+  --color-gray-800: #373737;
+  --color-gray-900: #212121;
+  --color-gray-950: #191919;
+}

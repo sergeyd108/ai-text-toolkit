@@ -1,0 +1,53 @@
+{
+  "name": "ai-text-toolkit",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev --host",
+    "typecheck": "nuxt typecheck",
+    "build": "nuxt build",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "fmt": "prettier --write .",
+    "pkg:up:minor": "pnpm dlx taze minor -l -w && pnpm i",
+    "pkg:up:major": "pnpm dlx taze major -l -w && pnpm i"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "^3.0.51",
+    "@ai-sdk/vue": "^3.0.149",
+    "@iconify-json/lucide": "^1.2.101",
+    "@iconify-json/simple-icons": "^1.2.77",
+    "@nuxt/ui": "^4.6.1",
+    "@pinia/nuxt": "^0.11.3",
+    "@tailwindcss/typography": "^0.5.19",
+    "@tiptap/core": "^3.22.3",
+    "@tiptap/pm": "^3.22.3",
+    "@tiptap/vue-3": "^3.22.3",
+    "@vueuse/nuxt": "14.2.1",
+    "ai": "^6.0.149",
+    "diff": "^8.0.4",
+    "diff2html": "^3.4.56",
+    "dompurify": "^3.3.3",
+    "marked": "^18.0.0",
+    "nuxt": "^4.4.2",
+    "tailwindcss": "^4.2.2",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.15.2",
+    "eslint": "^10.2.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "taze": "^19.11.0",
+    "typescript": "^6.0.2",
+    "vue-tsc": "^3.2.6"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "pnpm": {
+    "patchedDependencies": {
+      "@nuxt/ui@4.6.1": "patches/@nuxt__ui.patch"
+    }
+  }
+}

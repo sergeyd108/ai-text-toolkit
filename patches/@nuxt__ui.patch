@@ -1,0 +1,18 @@
+diff --git a/dist/runtime/components/ChatMessages.vue b/dist/runtime/components/ChatMessages.vue
+index 2eecf08185ce4f8f8e8879514046c8277a53751d..f1cd03000a4b18a9aa9eb2591b785735a0aa1c2b 100644
+--- a/dist/runtime/components/ChatMessages.vue
++++ b/dist/runtime/components/ChatMessages.vue
+@@ -58,8 +58,11 @@ function registerMessageRef(id, element) {
+ }
+ function scrollToMessage(id) {
+   const element = messagesRefs.value.get(id);
+-  if (element) {
+-    element.scrollIntoView({ behavior: "smooth", block: "start" });
++  if (element && parent.value) {
++    const parentRect = parent.value.getBoundingClientRect();
++    const elementRect = element.getBoundingClientRect();
++    const scrollTop = parent.value.scrollTop + (elementRect.top - parentRect.top);
++    parent.value.scrollTo({ top: scrollTop, behavior: "smooth" });
+   }
+ }
+ function scrollToBottom(smooth = true) {
