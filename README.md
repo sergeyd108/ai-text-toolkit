@@ -6,13 +6,14 @@ Built with **Nuxt 4**, **Tiptap**, **Vercel AI SDK v6**.
 
 <!-- **[Live Demo](https://ai-text-toolkit.vercel.app)** -->
 
-## Concept
+## How It Works
 
 Three-panel workspace on a single page:
 
-- **Editor** — Tiptap rich editor with inline AI tools. Select text, pick a tool (summarize, rewrite, translate, fix grammar, change tone) — the result streams in and replaces the selection. Works on selection or full document.
-- **Chat** — AI assistant that sees your document. Ask questions or request edits, then apply the response into the editor in one click.
-- **History** — every change is a checkpoint with before/after diff. Restore any version.
+1. **Write** — type or paste text into the rich editor
+2. **AI Tools** (summarize, rewrite, translate, fix grammar, change tone) — available from the toolbar (applies to full document) and from the bubble menu on text selection (applies to selection). Result streams in-place
+3. **Chat** — ask the AI about your text or request edits → apply the response into the editor in one click
+4. **History** — every change creates a checkpoint with before/after diff. Restore any version
 
 All AI responses stream token-by-token via SSE.
 
@@ -41,6 +42,7 @@ app/
     chat/                        # Chat UI + composable
     history/                     # Timeline, diff viewer, restore
   stores/history.ts              # Pinia: checkpoints (max 50)
+  stores/editor.ts               # Pinia: editor content state
 server/
   api/ai/generate.post.ts       # Streaming text generation
   api/ai/chat.post.ts           # Streaming chat
@@ -65,10 +67,15 @@ NUXT_AI_MODEL=meta/llama-3.1-8b    # any gateway-supported model
 ```
 
 ```bash
-pnpm dev        # http://localhost:3000
-pnpm build      # production build
-pnpm lint       # ESLint
-pnpm typecheck  # TypeScript check
+pnpm dev            # http://localhost:3000
+pnpm build          # production build
+pnpm preview        # preview production build locally
+pnpm lint           # ESLint check
+pnpm lint:fix       # ESLint auto-fix
+pnpm fmt            # Prettier format
+pnpm typecheck      # TypeScript check
+pnpm pkg:up:minor   # update deps (minor)
+pnpm pkg:up:major   # update deps (major)
 ```
 
 ## CI/CD

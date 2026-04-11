@@ -17,10 +17,15 @@ Single-page AI text workspace: rich editor with inline AI tools, context-aware c
 ## Commands
 
 ```bash
-pnpm dev          # Start dev server
-pnpm build        # Production build
-pnpm lint         # ESLint check
-pnpm typecheck    # TypeScript check
+pnpm dev            # Start dev server
+pnpm build          # Production build
+pnpm preview        # Preview production build locally
+pnpm lint           # ESLint check
+pnpm lint:fix       # ESLint auto-fix
+pnpm fmt            # Prettier format
+pnpm typecheck      # TypeScript check
+pnpm pkg:up:minor   # Update deps (minor)
+pnpm pkg:up:major   # Update deps (major)
 ```
 
 ## Project Structure
@@ -34,6 +39,7 @@ app/
     history/                   # Timeline, diff viewer, restore
   components/                  # Shared components (AppLogo, MarkdownContent)
   stores/history.ts            # Pinia store (checkpoints, max 50)
+  stores/editor.ts             # Pinia store (editor content state)
   utils/                       # Shared utilities (markdown parser)
 server/
   api/ai/generate.post.ts     # POST /api/ai/generate — streaming text generation
@@ -50,4 +56,4 @@ server/
 - Icons: `@iconify-json/lucide` and `@iconify-json/simple-icons`, referenced as `i-lucide-*` / `i-simple-icons-*`
 - Formatting: Prettier (trailing commas: all, printWidth: 120). ESLint stylistic disabled
 - API key via `runtimeConfig.aiGatewayApiKey` (set `NUXT_AI_GATEWAY_API_KEY` env var)
-- Primary color: green, neutral: slate (defined in `app/app.config.ts`)
+- Colors: primary `brand-blue`, secondary `brand-green`, neutral `gray` (defined in `app/app.config.ts`)
