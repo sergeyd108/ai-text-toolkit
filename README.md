@@ -19,7 +19,7 @@ All AI responses stream token-by-token via SSE.
 
 ## Tech Stack
 
-Nuxt 4 | Nuxt UI v4 | TypeScript | Tailwind CSS v4 | Tiptap | Vercel AI SDK v6 | Vercel AI Gateway | Pinia | Zod | diff2html | Marked + DOMPurify
+Nuxt 4 | Nuxt UI v4 | TypeScript | Tailwind CSS v4 | Tiptap | Vercel AI SDK v6 | Vercel AI Gateway | Pinia | Zod | Vitest | diff2html | Marked + DOMPurify
 
 ## Streaming Flow
 
@@ -70,6 +70,8 @@ NUXT_AI_MODEL=meta/llama-3.1-8b    # any gateway-supported model
 pnpm dev            # http://localhost:3000
 pnpm build          # production build
 pnpm preview        # preview production build locally
+pnpm test           # run unit tests
+pnpm test:watch     # run tests in watch mode
 pnpm lint           # ESLint check
 pnpm lint:fix       # ESLint auto-fix
 pnpm fmt            # Prettier format
@@ -83,9 +85,9 @@ pnpm pkg:up:major   # update deps (major)
 GitHub Actions → Vercel, two-stage pipeline:
 
 ```
-push (any branch)  → lint + typecheck
-push to main       → lint + typecheck → vercel deploy --prod
-PR to main         → lint + typecheck → vercel deploy (preview) → PR comment with URL
+push (any branch)  → lint + typecheck + test
+push to main       → lint + typecheck + test → vercel deploy --prod
+PR to main         → lint + typecheck + test → vercel deploy (preview) → PR comment with URL
 ```
 
 GitHub secrets: `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`.
@@ -106,6 +108,7 @@ AI-assisted development via [Claude Code](https://docs.anthropic.com/en/docs/cla
 
 - **`.claude/CLAUDE.md`** — main instructions: tech stack, conventions, project structure
 - **`.claude/rules/`** — scoped rules (docs-first, nuxt patterns, type extraction, VueUse preference, feature spec)
+- **`.claude/commands/commit.md`** — `/commit` slash command: conventional commits (`type(scope): subject`), runs on Haiku
 - **`.claude/agents/doc-supplier.md`** — subagent that fetches library docs via MCP before writing code, caches results in `.cache/docs/`
 - **`.claude/settings.json`** — hooks: auto-format on edit (`pnpm fmt`), force-read before creating new files in scoped paths
 

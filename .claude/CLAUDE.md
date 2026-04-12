@@ -10,6 +10,7 @@ Single-page AI text workspace: rich editor with inline AI tools, context-aware c
 - **AI**: Vercel AI SDK v6 (`ai` + `@ai-sdk/vue`) — `Chat` class on client, `streamText` on server
 - **AI Provider**: Vercel AI Gateway (model-agnostic, set via env var)
 - **State**: Pinia (checkpoint history), Vue composables
+- **Testing**: Vitest + @nuxt/test-utils + @pinia/testing
 - **Validation**: Zod
 - **Package manager**: pnpm
 - **Language**: TypeScript (strict)
@@ -20,6 +21,8 @@ Single-page AI text workspace: rich editor with inline AI tools, context-aware c
 pnpm dev            # Start dev server
 pnpm build          # Production build
 pnpm preview        # Preview production build locally
+pnpm test           # Run unit tests
+pnpm test:watch     # Run tests in watch mode
 pnpm lint           # ESLint check
 pnpm lint:fix       # ESLint auto-fix
 pnpm fmt            # Prettier format
