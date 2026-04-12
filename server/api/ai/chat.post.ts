@@ -1,11 +1,11 @@
 import { streamText, createGateway, convertToModelMessages, safeValidateUIMessages } from 'ai'
 import { z } from 'zod'
-import { toolSchema } from '#server/schemas/tools'
+import { chatKeySchema, chatOptionsSchema } from '#server/schemas/chat'
 
 const bodySchema = z.object({
-  tool: toolSchema,
+  tool: chatKeySchema,
   messages: z.unknown(),
-  options: z.record(z.string(), z.string()).optional(),
+  options: chatOptionsSchema.optional(),
 })
 
 export default defineLazyEventHandler(() => {

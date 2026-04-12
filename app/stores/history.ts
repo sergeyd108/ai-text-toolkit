@@ -1,4 +1,4 @@
-import type { ToolKey } from '#server/schemas/tools'
+import type { ToolKey, ToolOptions } from '#server/schemas/tools'
 import { findTool } from '~/features/editor/ai-tools'
 
 export type CheckpointSource = 'tool' | 'edit' | 'restore' | 'chat'
@@ -16,7 +16,7 @@ type AddCheckpointDto = Omit<CheckpointDto, 'id' | 'timestamp'>
 
 const MAX_CHECKPOINTS = 50
 
-function toolLabel(tool: ToolKey, options?: Record<string, string>): string {
+function toolLabel<Tool extends ToolKey>(tool: Tool, options?: ToolOptions<Tool>): string {
   const name = findTool(tool)!.name
   const detail = options ? Object.values(options)[0] : undefined
   return detail ? `${name}: ${detail}` : name
@@ -68,7 +68,12 @@ export const useHistoryStore = defineStore('history', () => {
     })
   }
 
-  function addToolCheckpoint(before: string, after: string, tool: ToolKey, options?: Record<string, string>) {
+  function addToolCheckpoint<Tool extends ToolKey>(
+    before: string,
+    after: string,
+    tool: Tool,
+    options?: ToolOptions<Tool>,
+  ) {
     addCheckpoint({
       before,
       after,

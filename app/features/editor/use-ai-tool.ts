@@ -1,11 +1,16 @@
-type ChunkCallback = (accumulated: string, delta: string) => void
+import type { ToolKey, ToolOptions } from '#server/schemas/tools'
+
+type RunOptions<Tool extends ToolKey> = {
+  options?: ToolOptions<Tool>
+  onChunk?: (accumulated: string, delta: string) => void
+}
 
 export const useAiTool = createSharedComposable(() => {
   const isProcessing = ref(false)
   const streamedText = ref('')
   let abortController: AbortController | undefined
 
-  async function run(tool: string, prompt: string, options?: Record<string, string>, onChunk?: ChunkCallback) {
+  async function run<Tool extends ToolKey>(tool: Tool, prompt: string, { options, onChunk }: RunOptions<Tool> = {}) {
     abort()
 
     isProcessing.value = true

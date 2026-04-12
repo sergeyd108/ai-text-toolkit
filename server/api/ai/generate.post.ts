@@ -1,12 +1,21 @@
 import { streamText, createGateway } from 'ai'
 import { z } from 'zod'
-import { toolSchema } from '#server/schemas/tools'
+import {
+  languageOptionsSchema,
+  toneOptionsSchema,
+  toolKeyWithoutParamsSchema,
+  toolKeyWithParamsSchema,
+} from '#server/schemas/tools'
 
-const bodySchema = z.object({
-  tool: toolSchema,
-  prompt: z.string().min(1).max(50000),
-  options: z.record(z.string(), z.string()).optional(),
-})
+const promptSchema = z.string().min(1).max(50000)
+const bodySchema = z.union([
+  z.object({ tool: toolKeyWithoutParamsSchema, prompt: promptSchema }),
+  z.object({
+    tool: toolKeyWithParamsSchema,
+    options: z.union([languageOptionsSchema, toneOptionsSchema]),
+    prompt: promptSchema,
+  }),
+])
 
 export default defineLazyEventHandler(() => {
   const config = useRuntimeConfig()
@@ -16,7 +25,8 @@ export default defineLazyEventHandler(() => {
 
   return defineEventHandler(async (event) => {
     const body = await readValidatedBody(event, (data) => bodySchema.parse(data))
-    const systemPrompt = await getSystemPrompt(body.tool, body.options)
+    const options = 'options' in body ? body.options : undefined
+    const systemPrompt = await getSystemPrompt(body.tool, options)
 
     if (!systemPrompt) {
       throw createError({ statusCode: 400, message: `Unknown tool: ${body.tool}` })

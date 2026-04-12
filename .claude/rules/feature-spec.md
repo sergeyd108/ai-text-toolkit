@@ -9,7 +9,7 @@ globs:
 
 ## AI Tools
 
-5 text tools, each defined in `app/features/editor/ai-tools.ts` with: slug, name, description, icon, placeholder, optional options.
+5 text tools, each defined in `app/features/editor/ai-tools.ts` with: key, name, description, icon, placeholder, optional options.
 
 1. **Summarize** (`summarize`) — Condense long text into key points
 2. **Rewrite** (`rewrite`) — Rephrase text while preserving meaning

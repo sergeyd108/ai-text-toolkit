@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Editor } from '@tiptap/vue-3'
-import type { ToolKey } from '#server/schemas/tools'
+import type { ToolKey, ToolOptions } from '#server/schemas/tools'
 import AiToolbar from '~/features/editor/AiToolbar.vue'
 import { skipHistory, restoreDoc } from '~/features/editor/tiptap-utils'
 import { useAiTool } from '~/features/editor/use-ai-tool'
@@ -32,7 +32,7 @@ function streamReplace(from: number, to: number, text: string) {
   return to + (sizeAfter - sizeBefore)
 }
 
-async function runner(tool: ToolKey, options?: Record<string, string>) {
+async function runner<Tool extends ToolKey>(tool: Tool, options?: ToolOptions<Tool>) {
   if (isProcessing.value) return
 
   const selection = getSelection()
@@ -48,11 +48,14 @@ async function runner(tool: ToolKey, options?: Record<string, string>) {
 
     let currentTo = selection.from
 
-    const result = await run(tool, selectedText, options, (accumulated) => {
-      const trimmed = accumulated.trim()
-      if (!trimmed) return
-      editor.commands.hideLoading()
-      currentTo = streamReplace(selection.from, currentTo, trimmed)
+    const result = await run(tool, selectedText, {
+      options,
+      onChunk: (accumulated) => {
+        const trimmed = accumulated.trim()
+        if (!trimmed) return
+        editor.commands.hideLoading()
+        currentTo = streamReplace(selection.from, currentTo, trimmed)
+      },
     })
 
     editor.commands.hideLoading()
