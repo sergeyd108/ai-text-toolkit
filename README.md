@@ -108,7 +108,7 @@ AI-assisted development via [Claude Code](https://docs.anthropic.com/en/docs/cla
 
 - **`.claude/CLAUDE.md`** — main instructions: tech stack, conventions, project structure
 - **`.claude/rules/`** — scoped rules (docs-first, nuxt patterns, type extraction, VueUse preference, feature spec)
-- **`.claude/commands/commit.md`** — `/commit` slash command: conventional commits (`type(scope): subject`), runs on Haiku
+- **`.claude/commands/commit.md`** — `/commit` slash command: conventional commits (`type(scope): subject`)
 - **`.claude/agents/doc-supplier.md`** — subagent that fetches library docs via MCP before writing code, caches results in `.cache/docs/`
 - **`.claude/settings.json`** — hooks: auto-format on edit (`pnpm fmt`), force-read before creating new files in scoped paths
 
