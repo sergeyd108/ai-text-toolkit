@@ -26,7 +26,8 @@ export const useAiTool = createSharedComposable(() => {
       })
 
       if (!response.ok) {
-        throw new Error(`Generation failed: ${response.status}`)
+        const body = await response.json()
+        throw new Error(body.message || `Generation failed (${response.status})`)
       }
 
       if (!response.body) {

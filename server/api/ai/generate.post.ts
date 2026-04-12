@@ -19,6 +19,11 @@ const bodySchema = z.union([
 
 export default defineLazyEventHandler(() => {
   const config = useRuntimeConfig()
+
+  if (!config.aiGatewayApiKey || !config.aiModel) {
+    throw createError({ statusCode: 500, message: 'AI Gateway is not configured' })
+  }
+
   const gateway = createGateway({
     apiKey: config.aiGatewayApiKey,
   })
@@ -28,15 +33,14 @@ export default defineLazyEventHandler(() => {
     const options = 'options' in body ? body.options : undefined
     const systemPrompt = await getSystemPrompt(body.tool, options)
 
-    if (!systemPrompt) {
-      throw createError({ statusCode: 400, message: `Unknown tool: ${body.tool}` })
-    }
-
     const result = streamText({
       model: gateway(config.aiModel),
       system: systemPrompt,
       prompt: body.prompt,
       maxOutputTokens: 4096,
+      onError: () => {
+        throw createError({ statusCode: 502, message: 'AI Gateway error' })
+      },
     })
 
     return result.toTextStreamResponse()

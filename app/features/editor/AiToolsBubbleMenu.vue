@@ -73,7 +73,7 @@ async function runner<Tool extends ToolKey>(tool: Tool, options?: ToolOptions<To
     restoreDoc(editor, savedDoc)
     toast.add({
       title: 'Error',
-      description: 'Failed to process text. Please try again.',
+      description: error instanceof Error ? error.message : 'Failed to process text. Please try again.',
       color: 'error',
     })
   }

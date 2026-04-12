@@ -8,13 +8,7 @@ export const useAiChat = createSharedComposable(() => {
   const chat = new Chat({
     transport: new DefaultChatTransport({
       api: API_ENDPOINT,
-      body: () => {
-        const body: Record<string, unknown> = { tool: 'chat' }
-        if (editorStore.content) {
-          body.options = { context: editorStore.content }
-        }
-        return body
-      },
+      body: () => ({ tool: 'chat', context: editorStore.content }),
     }),
   })
 
