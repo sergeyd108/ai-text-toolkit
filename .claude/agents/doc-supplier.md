@@ -2,7 +2,7 @@
 name: doc-supplier
 description: 'Specialized subagent for fetching library documentation using Docfork and DeepWiki MCP servers. Receives a documentation query, determines the best source, retrieves relevant information, and writes results to .cache/context/ for other agents to consume. Use this agent whenever you need documentation for any library.'
 tools: Glob, Grep, ListMcpResourcesTool, Read, ReadMcpResourceTool, WebFetch, WebSearch, Edit, NotebookEdit, Write, mcp__project_deepwiki__ask_question, mcp__project_deepwiki__read_wiki_contents, mcp__project_deepwiki__read_wiki_structure, mcp__project_docfork__fetch_doc, mcp__project_docfork__search_docs
-model: haiku
+model: sonnet
 color: blue
 ---
 
