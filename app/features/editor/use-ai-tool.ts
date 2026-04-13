@@ -1,4 +1,5 @@
 import type { ToolKey, ToolOptions } from '#server/schemas/tools'
+import { FetchError } from 'ofetch'
 
 type RunOptions<Tool extends ToolKey> = {
   options?: ToolOptions<Tool>
@@ -18,38 +19,32 @@ export const useAiTool = createSharedComposable(() => {
     abortController = new AbortController()
 
     try {
-      const response = await fetch('/api/ai/generate', {
+      const stream = await $fetch<ReadableStream>('/api/ai/generate', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tool, prompt, options }),
+        responseType: 'stream',
+        body: { tool, prompt, options },
         signal: abortController.signal,
       })
 
-      if (!response.ok) {
-        const body = await response.json()
-        throw new Error(body.message || `Generation failed (${response.status})`)
-      }
-
-      if (!response.body) {
-        throw new Error('No response body')
-      }
-
-      const reader = response.body.getReader()
-      const decoder = new TextDecoder()
+      const reader = stream.pipeThrough(new TextDecoderStream()).getReader()
 
       while (true) {
         const { done, value } = await reader.read()
         if (done) break
-        const delta = decoder.decode(value, { stream: true })
-        streamedText.value += delta
-        onChunk?.(streamedText.value, delta)
+        streamedText.value += value
+        onChunk?.(streamedText.value, value)
       }
 
       return streamedText.value
     } catch (error) {
+      if (error instanceof FetchError) {
+        throw new Error(error.data?.message || `Generation failed (${error.statusCode})`)
+      }
+
       if (error instanceof Error && error.name === 'AbortError') {
         return streamedText.value
       }
+
       throw error
     } finally {
       isProcessing.value = false
