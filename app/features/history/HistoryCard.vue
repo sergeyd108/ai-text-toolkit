@@ -14,7 +14,10 @@ const historyStore = useHistoryStore()
   >
     <template #header>
       <div class="flex items-center justify-between">
-        <span class="font-semibold">History</span>
+        <div class="flex items-center gap-2">
+          <UIcon name="i-lucide-history" class="text-primary size-4" />
+          <span class="font-semibold">History</span>
+        </div>
         <ClearHistoryButton />
       </div>
     </template>

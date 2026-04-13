@@ -10,7 +10,7 @@ const { chat } = useAiChat()
   <UChatMessages
     :messages="chat.messages"
     :status="chat.status"
-    :assistant="{ variant: 'soft', icon: 'i-lucide-bot' }"
+    :assistant="{ variant: 'soft', icon: 'i-lucide-bot', ui: { actions: 'opacity-100' } }"
     :user="{ side: 'right', variant: 'soft' }"
     :auto-scroll="{ color: 'neutral', variant: 'outline' }"
   >
@@ -19,6 +19,7 @@ const { chat } = useAiChat()
         <MarkdownContent v-if="isTextUIPart(part)" :content="part.text" />
       </template>
     </template>
+
     <template #actions="{ message }">
       <AiMessageActions :message />
     </template>

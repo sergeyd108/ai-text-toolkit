@@ -8,6 +8,7 @@ const editorStore = useEditorStore()
 const historyStore = useHistoryStore()
 
 const copied = ref(false)
+const applied = ref(false)
 const messageText = computed(() => {
   return message.parts
     .filter(isTextUIPart)
@@ -30,7 +31,6 @@ async function copyAsRichText(text: string) {
   }
 
   copied.value = true
-
   setTimeout(() => (copied.value = false), 1500)
 }
 
@@ -38,6 +38,8 @@ function applyMessage(after: string) {
   const before = editorStore.content
   editorStore.content = after
   historyStore.addChatCheckpoint(before, after)
+  applied.value = true
+  setTimeout(() => (applied.value = false), 1500)
 }
 </script>
 
@@ -52,15 +54,15 @@ function applyMessage(after: string) {
         @click="copyAsRichText(messageText)"
       />
     </UTooltip>
-    <UTooltip text="Replace text in editor">
+    <UTooltip :text="applied ? 'Editor content replaced' : 'Replace content in editor'">
       <UButton
         v-if="message.role === 'assistant'"
-        label="Apply"
+        :label="applied ? 'Applied!' : 'Apply'"
+        :color="applied ? 'success' : 'primary'"
         icon="i-lucide-check"
         size="xs"
-        color="primary"
         variant="soft"
-        @click="applyMessage(messageText)"
+        @click="applyMessage(messageText.trim())"
       />
     </UTooltip>
   </div>

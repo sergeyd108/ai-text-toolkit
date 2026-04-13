@@ -6,10 +6,18 @@ defineEmits<{ close: [] }>()
 </script>
 
 <template>
-  <USlideover title="History" side="right" class="max-w-xl" @close="$emit('close')">
-    <template #header>
-      <ClearHistoryButton class="ml-auto" @click="$emit('close')" />
+  <USlideover side="right" :ui="{ header: 'justify-between' }" class="max-w-xl" @close="$emit('close')">
+    <template #title>
+      <div class="flex items-center gap-2">
+        <UIcon name="i-lucide-history" class="text-primary size-4" />
+        <span class="font-semibold">History</span>
+      </div>
     </template>
+
+    <template #actions>
+      <ClearHistoryButton class="mr-8" @click="$emit('close')" />
+    </template>
+
     <template #body>
       <HistoryTimeline />
     </template>
