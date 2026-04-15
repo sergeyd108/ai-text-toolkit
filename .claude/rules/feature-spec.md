@@ -17,9 +17,13 @@ globs:
 4. **Change Tone** (`tone`) — Rewrite in a different tone (Formal, Casual, Professional, Friendly, Persuasive, Humorous)
 5. **Fix Grammar** (`grammar`) — Fix grammar, spelling, and punctuation
 
-## Workspace (`/`)
+## Landing (`/`)
 
-Single page with three panels:
+Marketing page built with BEM methodology and SCSS. Sections: Navbar, Hero, Features, Capabilities, HowItWorks, CTA, Footer. Uses `landing` layout (bare `<slot />`). Scroll reveal animations via `use-scroll-reveal.ts` composable. Data for sections lives in `features/landing/data/`.
+
+## Workspace (`/workspace`)
+
+Three-panel workspace using `default` layout (header + footer). View transitions animate the landing → workspace navigation.
 
 - **Editor** (left) — Tiptap rich editor with:
   - FormattingToolbar (bold, italic, lists, blockquote)
@@ -37,7 +41,7 @@ Single page with three panels:
 
 ## Streaming Flow
 
-1. **Tools**: User triggers tool → `use-ai-tool.ts` POSTs to `/api/ai/generate` with `{ tool, prompt, options? }` → server loads prompt template, calls `streamText()` → SSE back → editor replaces selection/document live → checkpoint saved
+1. **Tools**: User triggers tool → `use-ai-tool.ts` calls `$fetch('/api/ai/generate', { responseType: 'stream' })` with `{ tool, prompt, options? }` → server loads prompt template, calls `streamText()` → SSE back → editor replaces selection/document live → checkpoint saved
 2. **Chat**: User sends message → `use-ai-chat.ts` uses `@ai-sdk/vue` `Chat` class → POST to `/api/ai/chat` with `{ tool: 'chat', messages, options: { context } }` → server streams via `toUIMessageStreamResponse()` → messages render as they arrive
 
 ## Server Prompts

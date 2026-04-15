@@ -1,0 +1,27 @@
+@reference '#main.css';
+
+@property --cta-angle {
+  syntax: '<angle>';
+  initial-value: 135deg;
+  inherits: false;
+}
+
+.landing-cta-btn {
+  --cta-angle: 135deg;
+  background: linear-gradient(
+    var(--cta-angle),
+    light-dark(var(--color-brand-blue-500), var(--color-brand-blue-400)),
+    light-dark(var(--color-brand-green-500), var(--color-brand-green-400))
+  );
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition:
+    --cta-angle 0.5s linear,
+    box-shadow 0.3s ease;
+
+  &:hover {
+    --cta-angle: 315deg;
+    box-shadow: 0 --spacing(1) --spacing(4) rgba(0, 119, 255, 0.3);
+  }
+}

@@ -34,7 +34,7 @@ export const useHistoryStore = defineStore('history', () => {
 
     const checkpoint = {
       ...data,
-      id: crypto.randomUUID(),
+      id: Math.random().toString(36).slice(2),
       timestamp: Date.now(),
     } satisfies CheckpointDto
 

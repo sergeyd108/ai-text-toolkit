@@ -2,6 +2,10 @@
 export default defineNuxtConfig({
   modules: ['@nuxt/eslint', '@nuxt/ui', '@vueuse/nuxt', '@pinia/nuxt', '@nuxt/test-utils/module'],
 
+  experimental: {
+    viewTransition: true,
+  },
+
   devtools: {
     enabled: true,
   },
@@ -14,6 +18,12 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2025-01-15',
+
+  postcss: {
+    plugins: {
+      '@tailwindcss/postcss': {},
+    },
+  },
 
   vite: {
     optimizeDeps: {

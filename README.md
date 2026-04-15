@@ -1,6 +1,6 @@
 # AI Text Toolkit
 
-Single-page AI text editor with real-time streaming, context-aware chat, and version history.
+AI text editor with real-time streaming, context-aware chat, and version history. Landing page + workspace.
 
 Built with **Nuxt 4**, **Tiptap**, **Vercel AI SDK v6**.
 
@@ -8,7 +8,7 @@ Built with **Nuxt 4**, **Tiptap**, **Vercel AI SDK v6**.
 
 ## How It Works
 
-Three-panel workspace on a single page:
+Landing page (`/`) introduces the product → workspace (`/workspace`) has three panels:
 
 1. **Write** — type or paste text into the rich editor
 2. **AI Tools** (summarize, rewrite, translate, fix grammar, change tone) — available from the toolbar (applies to full document) and from the bubble menu on text selection (applies to selection). Result streams in-place
@@ -19,12 +19,12 @@ All AI responses stream token-by-token via SSE.
 
 ## Tech Stack
 
-Nuxt 4 | Nuxt UI v4 | TypeScript | Tailwind CSS v4 | Tiptap | Vercel AI SDK v6 | Vercel AI Gateway | Pinia | Zod | Vitest | diff2html | Marked + DOMPurify
+Nuxt 4 | Nuxt UI v4 | TypeScript | Tailwind CSS v4 | SCSS | Tiptap | Vercel AI SDK v6 | Vercel AI Gateway | Pinia | Zod | Vitest | diff2html | Marked + DOMPurify
 
 ## Streaming Flow
 
 ```
-Select text → pick tool → POST /api/ai/generate { tool, prompt }
+Select text → pick tool → $fetch('/api/ai/generate', { responseType: 'stream' })
   → server loads prompt template from server/assets/prompts/{tool}.md
   → streamText() via AI Gateway → SSE → editor replaces selection live
   → checkpoint saved to history
@@ -32,12 +32,19 @@ Select text → pick tool → POST /api/ai/generate { tool, prompt }
 
 Chat (`/api/ai/chat`) works the same way but carries full message history and injects the document as context.
 
+View transitions animate the landing → workspace navigation.
+
 ## Project Structure
 
 ```
 app/
-  pages/index.vue                # Single workspace page
+  pages/index.vue                # Landing page (/)
+  pages/workspace.vue            # Workspace page (/workspace)
+  layouts/
+    landing.vue                  # Bare layout for landing page
+    default.vue                  # Header + footer layout for workspace
   features/
+    landing/                     # Landing page sections, data, styles (BEM + SCSS)
     editor/                      # Tiptap editor, AI tools, bubble menu
     chat/                        # Chat UI + composable
     history/                     # Timeline, diff viewer, restore
@@ -95,8 +102,9 @@ AI env vars configured in the Vercel dashboard.
 
 ## Key Decisions
 
-- **Single page** — no routing friction for a tool-type app
-- **Feature-based structure** — `editor/`, `chat/`, `history/` are self-contained modules, not split by file type
+- **Two pages** — landing (`/`) for product intro, workspace (`/workspace`) for the actual editor; view transitions between them
+- **Feature-based structure** — `landing/`, `editor/`, `chat/`, `history/` are self-contained modules, not split by file type
+- **BEM + SCSS for landing** — landing page uses BEM methodology with SCSS; workspace uses Tailwind utilities
 - **Custom Tiptap extensions** — loading dots animation (ProseMirror decoration) and Markdown paste handler, both at the ProseMirror plugin level
 - **Prompts as Markdown files** — iterate on prompts without touching code, template variables for options (`{{language}}`, `{{tone}}`)
 - **AI Gateway** — swap LLM providers by changing one env var

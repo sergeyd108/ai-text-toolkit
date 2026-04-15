@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import HistoryCard from '~/features/history/HistoryCard.vue'
-import AiEditorCard from '~/features/editor/AiEditorCard.vue'
-import AiChatCard from '~/features/chat/AiChatCard.vue'
-import HistorySlideoverToggle from '~/features/history/HistorySlideoverToggle.vue'
-import AiChatModalToggle from '~/features/chat/AiChatModalToggle.vue'
+import LandingNavbar from '~/features/landing/LandingNavbar.vue'
+import LandingHero from '~/features/landing/LandingHero.vue'
+import LandingFeatures from '~/features/landing/LandingFeatures.vue'
+import LandingCapabilities from '~/features/landing/LandingCapabilities.vue'
+import LandingHowItWorks from '~/features/landing/LandingHowItWorks.vue'
+import LandingCta from '~/features/landing/LandingCta.vue'
+import LandingFooter from '~/features/landing/LandingFooter.vue'
+import { useScrollReveal } from '~/features/landing/use-scroll-reveal'
+import '~/features/landing/styles/index.scss'
+
+definePageMeta({ layout: 'landing' })
+useScrollReveal(useTemplateRef('root'))
 </script>
 
 <template>
-  <div class="flex grow flex-col gap-2 p-3 sm:gap-4 sm:p-4 lg:p-6">
-    <div class="flex gap-2 lg:hidden">
-      <AiChatModalToggle />
-      <HistorySlideoverToggle />
-    </div>
-
-    <AiEditorCard class="min-h-[80dvh] lg:hidden" />
-
-    <div
-      class="3xl:grid-cols-3 max-3xl:grid-rows-[4fr_1fr] grid h-[calc(100dvh-var(--ui-header-height)-(--spacing(12)))] grid-cols-2 gap-6 max-lg:hidden sm:gap-4"
-    >
-      <AiEditorCard />
-      <AiChatCard />
-      <HistoryCard class="max-3xl:col-span-2" />
-    </div>
+  <div ref="root">
+    <LandingNavbar />
+    <LandingHero />
+    <LandingFeatures id="features" />
+    <LandingCapabilities />
+    <LandingHowItWorks id="how-it-works" />
+    <LandingCta />
+    <LandingFooter />
   </div>
 </template>

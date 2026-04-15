@@ -1,6 +1,6 @@
 # AI Text Toolkit
 
-Single-page AI text workspace: rich editor with inline AI tools, context-aware chat, and checkpoint-based version history. All responses stream in real time.
+AI text workspace: landing page + rich editor with inline AI tools, context-aware chat, and checkpoint-based version history. All responses stream in real time.
 
 ## Tech Stack
 
@@ -35,8 +35,13 @@ pnpm pkg:up:major   # Update deps (major)
 
 ```
 app/
-  pages/index.vue              # Single workspace page (editor + chat + history)
+  pages/index.vue              # Landing page (/)
+  pages/workspace.vue          # Workspace page (/workspace) — editor + chat + history
+  layouts/
+    landing.vue                # Bare layout for landing page
+    default.vue                # Header + footer layout for workspace
   features/
+    landing/                   # Landing page: sections, data, styles (BEM + SCSS)
     editor/                    # Tiptap editor, AI tools, bubble menu, toolbar
     chat/                      # Chat UI, composable, message actions
     history/                   # Timeline, diff viewer, restore
@@ -60,3 +65,4 @@ server/
 - Formatting: Prettier (trailing commas: all, printWidth: 120). ESLint stylistic disabled
 - API key via `runtimeConfig.aiGatewayApiKey` (set `NUXT_AI_GATEWAY_API_KEY` env var)
 - Colors: primary `brand-blue`, secondary `brand-green`, neutral `gray` (defined in `app/app.config.ts`)
+- Landing page uses BEM methodology with SCSS (`features/landing/styles/`); workspace uses Tailwind utilities — don't mix the two approaches

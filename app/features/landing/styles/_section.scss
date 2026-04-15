@@ -1,0 +1,39 @@
+@use 'breakpoints' as *;
+@reference '#main.css';
+
+.section {
+  padding: --spacing(12) --spacing(4);
+
+  &__container {
+    max-width: --spacing(288);
+    margin: 0 auto;
+  }
+
+  &__title {
+    @apply text-2xl;
+
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: --spacing(4);
+    color: light-dark(var(--color-gray-900), var(--color-gray-50));
+  }
+
+  &__subtitle {
+    text-align: center;
+    max-width: --spacing(144);
+    margin: 0 auto --spacing(12);
+    color: light-dark(var(--color-gray-500), var(--color-gray-400));
+  }
+
+  @include above($bp-sm) {
+    padding: --spacing(20) --spacing(6);
+
+    &__title {
+      @apply text-3xl;
+    }
+
+    &__subtitle {
+      @apply text-lg;
+    }
+  }
+}
