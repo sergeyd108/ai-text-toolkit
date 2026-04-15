@@ -20,8 +20,9 @@
           to="/workspace"
           label="Open Workspace"
           size="xl"
-          trailing-icon="i-lucide-arrow-right"
-          :ui="{ base: 'landing-cta-btn' }"
+          icon="i-lucide-sparkles"
+          trailing-icon="i-lucide-sparkles"
+          :ui="{ base: 'landing-cta-btn', leadingIcon: 'size-4', trailingIcon: 'size-4' }"
         />
       </div>
     </div>

@@ -4,19 +4,21 @@ import { features } from './data/features'
 
 <template>
   <section class="section reveal">
-    <div class="features section__container">
+    <div class="section__container">
       <h2 class="section__title">Powerful AI Tools</h2>
       <p class="section__subtitle">
         Five specialized tools to transform your text — select a range or apply to the whole document.
       </p>
 
-      <div class="features__grid">
+      <div class="features">
         <div v-for="feat in features" :key="feat.name" class="features__card">
           <div class="features__icon">
             <UIcon :name="feat.icon" />
           </div>
-          <h3 class="features__title">{{ feat.name }}</h3>
-          <p class="features__description">{{ feat.description }}</p>
+          <div class="features__content">
+            <h3 class="features__title">{{ feat.name }}</h3>
+            <p class="features__description">{{ feat.description }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -28,21 +30,14 @@ import { features } from './data/features'
 @reference '#main.css';
 
 .features {
-  &__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: --spacing(6);
-
-    @include above($bp-sm) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @include above($bp-lg) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: --spacing(6);
 
   &__card {
+    display: flex;
+    align-items: center;
+    gap: --spacing(4);
     padding: --spacing(8);
     border-radius: --spacing(4);
     border: 1px solid light-dark(var(--color-gray-200), var(--color-gray-800));
@@ -57,20 +52,40 @@ import { features } from './data/features'
       transform: translateY(-2px);
       border-color: light-dark(var(--color-brand-blue-200), var(--color-brand-blue-800));
     }
+
+    @include above($bp-sm) {
+      flex-direction: column;
+      align-items: flex-start;
+      grid-column: span 2;
+
+      &:last-child:nth-child(2n + 1) {
+        grid-column: 2 / span 2;
+      }
+    }
+
+    @include above($bp-lg) {
+      &:last-child:nth-child(2n + 1) {
+        grid-column: auto / span 2;
+      }
+
+      &:nth-last-child(2):nth-child(3n + 1) {
+        grid-column: 2 / span 2;
+      }
+    }
   }
 
   &__icon {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
     width: --spacing(12);
     height: --spacing(12);
     border-radius: --spacing(3);
-    margin-bottom: --spacing(4);
     background: linear-gradient(
       135deg,
-      light-dark(var(--color-brand-blue-50), rgba(0, 119, 255, 0.15)),
-      light-dark(var(--color-brand-green-50), rgba(1, 213, 174, 0.15))
+      light-dark(var(--color-brand-blue-100), rgba(0, 119, 255, 0.15)),
+      light-dark(var(--color-brand-green-100), rgba(1, 213, 174, 0.15))
     );
     color: light-dark(var(--color-brand-blue-500), var(--color-brand-blue-400));
   }
@@ -86,6 +101,14 @@ import { features } from './data/features'
   &__description {
     @apply text-sm;
     color: light-dark(var(--color-gray-500), var(--color-gray-400));
+  }
+
+  @include above($bp-sm) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @include above($bp-lg) {
+    grid-template-columns: repeat(6, 1fr);
   }
 }
 </style>

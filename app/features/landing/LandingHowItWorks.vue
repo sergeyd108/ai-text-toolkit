@@ -8,10 +8,15 @@ import { steps } from './data/steps'
       <h2 class="section__title">How It Works</h2>
       <p class="section__subtitle">From raw text to polished result in four simple steps.</p>
 
-      <div class="how-it-works__steps">
+      <div class="how-it-works">
         <div class="how-it-works__connector" />
 
-        <div v-for="step in steps" :key="step.icon" class="how-it-works__step">
+        <div
+          v-for="(step, index) in steps"
+          :key="step.icon"
+          class="how-it-works__step"
+          :style="{ '--gradient-position': `${(index / (steps.length - 1)) * 100}%` }"
+        >
           <div class="how-it-works__icon">
             <UIcon :name="step.icon" />
           </div>
@@ -28,19 +33,11 @@ import { steps } from './data/steps'
 @reference '#main.css';
 
 .how-it-works {
-  &__steps {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: --spacing(10);
-
-    @include above($bp-md) {
-      flex-direction: row;
-      align-items: flex-start;
-      gap: --spacing(8);
-    }
-  }
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: --spacing(10);
 
   &__connector {
     display: none;
@@ -49,8 +46,8 @@ import { steps } from './data/steps'
       display: block;
       position: absolute;
       top: --spacing(8);
-      left: calc(12.5% + --spacing(6));
-      right: calc(12.5% + --spacing(6));
+      left: calc(12.5% + --spacing(5));
+      right: calc(12.5% + --spacing(5));
       height: 2px;
       background: linear-gradient(
         90deg,
@@ -86,10 +83,23 @@ import { steps } from './data/steps'
     margin-bottom: --spacing(6);
     background: linear-gradient(
       135deg,
-      light-dark(var(--color-brand-blue-500), var(--color-brand-blue-400)),
-      light-dark(var(--color-brand-blue-600), var(--color-brand-blue-500))
+      color-mix(
+        in srgb,
+        light-dark(var(--color-brand-blue-500), var(--color-brand-blue-400)) calc(100% - var(--gradient-position)),
+        light-dark(var(--color-brand-green-500), var(--color-brand-green-400))
+      ),
+      color-mix(
+        in srgb,
+        light-dark(var(--color-brand-blue-600), var(--color-brand-blue-500)) calc(100% - var(--gradient-position)),
+        light-dark(var(--color-brand-green-600), var(--color-brand-green-500))
+      )
     );
-    box-shadow: 0 --spacing(1) --spacing(3) light-dark(rgba(0, 119, 255, 0.25), rgba(0, 119, 255, 0.15));
+    box-shadow: 0 --spacing(1) --spacing(3)
+      color-mix(
+        in srgb,
+        light-dark(rgba(0, 119, 255, 0.25), rgba(0, 119, 255, 0.15)) calc(100% - var(--gradient-position)),
+        light-dark(rgba(1, 213, 174, 0.25), rgba(1, 213, 174, 0.15))
+      );
   }
 
   &__title {
@@ -106,6 +116,12 @@ import { steps } from './data/steps'
     color: light-dark(var(--color-gray-500), var(--color-gray-400));
     max-width: --spacing(64);
     margin: 0 auto;
+  }
+
+  @include above($bp-md) {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: --spacing(8);
   }
 }
 </style>

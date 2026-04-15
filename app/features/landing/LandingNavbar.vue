@@ -47,11 +47,10 @@ function scrollTo(id: string) {
   right: 0;
   top: 0;
   z-index: 50;
-
   transition:
-    background-color 0.3s ease,
-    box-shadow 0.3s ease,
-    backdrop-filter 0.3s ease;
+    background-color 0.1s ease,
+    box-shadow 0.1s ease,
+    backdrop-filter 0.1s ease;
 
   &--scrolled {
     background-color: light-dark(rgba(255, 255, 255, 0.85), rgba(25, 25, 25, 0.85));
@@ -127,6 +126,13 @@ function scrollTo(id: string) {
     .landing-nav__link {
       @apply text-base;
       padding: --spacing(2) 0;
+    }
+  }
+
+  @include above($bp-sm) {
+    &__logo,
+    &__actions {
+      min-width: --spacing(40);
     }
   }
 }
