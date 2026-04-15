@@ -1,6 +1,6 @@
 ---
 description: Feature specification — tools, workspace layout, streaming flow, and history
-globs:
+paths:
   - app/**
   - server/**
 ---

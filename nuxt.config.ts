@@ -17,6 +17,14 @@ export default defineNuxtConfig({
     aiModel: '',
   },
 
+  typescript: {
+    tsConfig: {
+      compilerOptions: {
+        plugins: [{ name: '@vue/typescript-plugin' }],
+      },
+    },
+  },
+
   compatibilityDate: '2025-01-15',
 
   postcss: {

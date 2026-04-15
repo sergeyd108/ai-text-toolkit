@@ -58,5 +58,10 @@ export const useAiTool = createSharedComposable(() => {
     isProcessing.value = false
   }
 
-  return { isProcessing, streamedText, run, abort }
+  return {
+    isProcessing: readonly(isProcessing),
+    streamedText: readonly(streamedText),
+    run,
+    abort,
+  }
 })

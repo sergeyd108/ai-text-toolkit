@@ -1,6 +1,6 @@
 ---
 description: Nuxt 4 and Nuxt UI v4 patterns and conventions for this project
-globs:
+paths:
   - app/**
   - server/**
   - nuxt.config.ts

@@ -10,7 +10,11 @@ export async function getSystemPrompt<Tool extends ToolKey>(
   const storage = useStorage('assets:server')
   let prompt = await storage.getItem<string>(`prompts/${tool}.md`)
 
-  if (prompt && options) {
+  if (!prompt) {
+    throw new Error(`System prompt not found for "${tool}"`)
+  }
+
+  if (options) {
     for (const [key, value] of Object.entries(options)) {
       prompt = prompt.replaceAll(`{{${key}}}`, value)
     }

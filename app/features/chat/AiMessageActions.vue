@@ -7,8 +7,12 @@ const { message } = defineProps<{ message: UIMessage }>()
 const editorStore = useEditorStore()
 const historyStore = useHistoryStore()
 
-const copied = ref(false)
-const applied = ref(false)
+const { copy: copyItems, copied: richCopied, isSupported: richSupported } = useClipboardItems()
+const { copy: copyText, copied: plainCopied } = useClipboard({ legacy: true })
+
+const copied = computed(() => richCopied.value || plainCopied.value)
+const applied = refAutoReset(false, 1500)
+
 const messageText = computed(() => {
   return message.parts
     .filter(isTextUIPart)
@@ -17,21 +21,17 @@ const messageText = computed(() => {
 })
 
 async function copyAsRichText(text: string) {
-  const html = parseMarkdown(text)
-
-  try {
-    await navigator.clipboard.write([
+  if (richSupported.value) {
+    const html = parseMarkdown(text)
+    await copyItems([
       new ClipboardItem({
         'text/html': new Blob([html], { type: 'text/html' }),
         'text/plain': new Blob([text], { type: 'text/plain' }),
       }),
     ])
-  } catch {
-    await navigator.clipboard.writeText(text)
+  } else {
+    await copyText(text)
   }
-
-  copied.value = true
-  setTimeout(() => (copied.value = false), 1500)
 }
 
 function applyMessage(after: string) {
@@ -39,7 +39,6 @@ function applyMessage(after: string) {
   editorStore.content = after
   historyStore.addChatCheckpoint(before, after)
   applied.value = true
-  setTimeout(() => (applied.value = false), 1500)
 }
 </script>
 
