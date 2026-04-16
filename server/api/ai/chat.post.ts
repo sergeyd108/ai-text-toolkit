@@ -12,6 +12,7 @@ export default defineLazyEventHandler(() => {
   const config = useRuntimeConfig()
 
   if (!config.aiGatewayApiKey || !config.aiModel) {
+    console.error('[chat] AI Gateway is not configured')
     throw createError({ statusCode: 500, message: 'AI Gateway is not configured' })
   }
 
@@ -35,7 +36,8 @@ export default defineLazyEventHandler(() => {
       system: systemPrompt,
       messages: modelMessages,
       maxOutputTokens: 4096,
-      onError: () => {
+      onError: ({ error }) => {
+        console.error('[chat] AI Gateway stream error:', error)
         throw createError({ statusCode: 502, message: 'AI Gateway error' })
       },
     })
