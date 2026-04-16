@@ -1,5 +1,8 @@
 import { Chat } from '@ai-sdk/vue'
 import { DefaultChatTransport } from 'ai'
+import type { ChatRequestBody } from '#server/schemas/chat'
+
+type ChatTransportBody = Omit<ChatRequestBody, 'messages'>
 
 const API_ENDPOINT = '/api/ai/chat'
 
@@ -8,7 +11,7 @@ export const useAiChat = createSharedComposable(() => {
   const chat = new Chat({
     transport: new DefaultChatTransport({
       api: API_ENDPOINT,
-      body: () => ({ tool: 'chat', context: editorStore.content }),
+      body: (): ChatTransportBody => ({ tool: 'chat', options: { context: editorStore.content } }),
     }),
   })
 

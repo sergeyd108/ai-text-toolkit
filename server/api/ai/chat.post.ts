@@ -1,12 +1,5 @@
 import { streamText, createGateway, convertToModelMessages, safeValidateUIMessages } from 'ai'
-import { z } from 'zod'
-import { chatKeySchema, chatOptionsSchema } from '#server/schemas/chat'
-
-const bodySchema = z.object({
-  tool: chatKeySchema,
-  messages: z.unknown(),
-  options: chatOptionsSchema.optional(),
-})
+import { chatRequestBodySchema } from '#server/schemas/chat'
 
 export default defineLazyEventHandler(() => {
   const config = useRuntimeConfig()
@@ -21,7 +14,7 @@ export default defineLazyEventHandler(() => {
   })
 
   return defineEventHandler(async (event) => {
-    const body = await readValidatedBody(event, (data) => bodySchema.parse(data))
+    const body = await readValidatedBody(event, (data) => chatRequestBodySchema.parse(data))
     const systemPrompt = await getSystemPrompt(body.tool, body.options)
     const validationResult = await safeValidateUIMessages({ messages: body.messages })
 
