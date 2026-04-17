@@ -1,13 +1,12 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { createTestingPinia } from '@pinia/testing'
-import { setActivePinia } from 'pinia'
+import { describe, it, expect, beforeEach } from 'vitest'
+import { createPinia, setActivePinia } from 'pinia'
 import { useHistoryStore } from './history'
 
 describe('useHistoryStore', () => {
   let store: ReturnType<typeof useHistoryStore>
 
   beforeEach(() => {
-    setActivePinia(createTestingPinia({ createSpy: vi.fn, stubActions: false }))
+    setActivePinia(createPinia())
     store = useHistoryStore()
   })
 
