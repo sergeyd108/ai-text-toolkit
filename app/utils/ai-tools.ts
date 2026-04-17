@@ -16,7 +16,7 @@ interface Tool {
   options?: ToolOption[]
 }
 
-export const tools: Tool[] = [
+export const aiTools: Tool[] = [
   {
     key: 'summarize',
     name: 'Summarize',
@@ -70,6 +70,6 @@ export const tools: Tool[] = [
   },
 ]
 
-export function findTool(key: ToolKey) {
-  return tools.find((t) => t.key === key)!
+export function findAiTool(key: ToolKey) {
+  return aiTools.find((t) => t.key === key)!
 }

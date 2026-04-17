@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Editor } from '@tiptap/vue-3'
 import type { EditorToolbarItem } from '@nuxt/ui'
-import { findTool } from '~/features/editor/ai-tools'
 import type { ToolKey, ToolOptions } from '#server/schemas/tools'
 import { useAiTool } from '~/features/editor/use-ai-tool'
 
@@ -15,8 +14,8 @@ const { editor, runner, portal = false } = defineProps<Props>()
 
 const { isProcessing } = useAiTool()
 
-const translateTool = findTool('translate')
-const toneTool = findTool('tone')
+const translateTool = findAiTool('translate')
+const toneTool = findAiTool('tone')
 
 const items = computed(() => {
   const disabled = isProcessing.value

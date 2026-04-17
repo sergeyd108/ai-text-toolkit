@@ -1,18 +1,18 @@
 import { describe, it, expect } from 'vitest'
-import { findTool } from './ai-tools'
+import { findAiTool } from './ai-tools'
 
-describe('findTool', () => {
+describe('findAiTool', () => {
   it('returns the correct tool by key', () => {
-    const tool = findTool('translate')
+    const tool = findAiTool('translate')
     expect(tool!.name).toBe('Translate')
   })
 
   it('has correct default option values', () => {
-    const translateOpt = findTool('translate').options![0]!
+    const translateOpt = findAiTool('translate').options![0]!
     expect(translateOpt.default).toBe('Russian')
     expect(translateOpt.items).toHaveLength(4)
 
-    const toneOpt = findTool('tone').options![0]!
+    const toneOpt = findAiTool('tone').options![0]!
     expect(toneOpt.default).toBe('Professional')
     expect(toneOpt.items).toHaveLength(6)
   })
